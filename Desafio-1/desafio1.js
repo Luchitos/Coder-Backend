@@ -41,18 +41,22 @@ class Usuario {
     }
 
     getBookNames(){
-        return this.libros.map(X=> {
-            return x.titulo;
-        });
-    }
+        return this.libros.map(x => x.titulo);
+    };
 }
 let data = {
     nombre: "Lionel",
     apellido: "Messi",
     libros: [{titulo: 'Como ganar la Copa America',autor:'Lio Messi'},
     {titulo: 'Argentina Campeón de America 2021',autor:'La Scalonetta'},
-    {titulo: '',autor:'La Scalonetta'},
+    {titulo: 'Campeón',autor:'La Scalonetta'},
     {titulo: 'Dios',autor:'Diego Armando Maradona'}],
     mascotas:["Perro", "Pez", "Canario"]
 
 }
+let user = new Usuario(data);
+
+console.log(user.getFullName());
+console.log(user.countMascotas());
+console.log(user.getBookNames());
+console.log();
