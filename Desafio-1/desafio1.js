@@ -51,6 +51,8 @@ let data = {
     apellido: "Messi",
     libros: [{titulo: 'Como ganar la Copa America',autor:'Lio Messi'},
     {titulo: 'Argentina Campeón de America 2021',autor:'La Scalonetta'},
-    {titulo: 'Dios',autor:'Diego Armando Maradona'},]
+    {titulo: '',autor:'La Scalonetta'},
+    {titulo: 'Dios',autor:'Diego Armando Maradona'}],
+    mascotas:["Perro", "Pez", "Canario"]
 
 }
