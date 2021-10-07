@@ -37,9 +37,9 @@ class Contenedor {
         }
     }
     getById(id) {
-        // console.log(id)
+        console.log(id)
         return this.archivo[id];
-        // GET '/api/productos/:id'
+
     }
 
     async getAll() {
@@ -62,7 +62,6 @@ class Contenedor {
         } else {
             "no existe"
         }
-        // DELETE '/api/productos/:id
     }
     async deleteAll() {
         try {
