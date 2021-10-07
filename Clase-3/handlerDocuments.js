@@ -6,49 +6,75 @@
 // deleteById(Number): void - Elimina del archivo el objeto con el id buscado.
 // deleteAll(): void - Elimina todos los objetos presentes en el archivo.
 
-const fs = require('fs')
+const fs = require('fs');
 
-class Contenedor {
-  constructor(name) {
-    this._id = Contenedor.incrementId();
-    this.name = name;
-  }
-
-  static incrementId() {
-    if (!this.latestId) this.latestId = 1
-    else this.latestId++
-    return this.latestId
-  }
-  async readDocument(url){
-    try {
-      return await fs.promises.readFile(`${url}.txt`, 'utf-8');
-    } catch (error) {
-      console.log("readDocument",error);
+let id=1;
+class Contenedor{
+    constructor(archivo){
+        this.archivo = archivo;
+        this.codif = 'utf-8'        
     }
-    
-  }
-  writeDocument(url,data){
-    try {
-      return await fs.promises.writeFile(`${url}.txt`, 'utf-8',data);
-    } catch (error) {
-      console.log("readDocument",error);
+
+    save(title, price, autor){        
+        this.archivo.push({id,title, price, autor});  
+        id++
+        return this.archivo.id;
+        // POST '/api/productos       
+    }  
+        async guardar(objecto) {
+            const data = await this.leer()
+            objecto.id = data.length + 1;
+            data.push(objecto)
+            try {
+                await this.fs.promises.writeFile(this.archivo, JSON.stringify(data, null, "\t"));
+                
+            } catch (error) {
+                console.log('el archivo no se pudo guardar', error)
+            }
+           
     }
-  }
-  save(Object) {
+        async leer(){
+        try {
+            let data = await this.fs.promises.readFile(`./${this.archivo}`, this.codif)
+            return JSON.parse(data)
+        } catch {
+            console.log("archivo vacio")
+            return []
+        }
+    }
+    getById(id){
+        // console.log(id)
+    return this.archivo[id];
+    // GET '/api/productos/:id'
+    }
 
-  }
+    async getAll(){
+        try {
+            let data = await this.fs.promises.readFile(`./${this.file}`, this.codif)
+            return JSON.parse(data)
+        } catch {
+            console.log("archivo vacio")
+            return []
+        }
+    }
 
-  getById(number) {
-
-  }
-  getAll() {
-
-  }
-  deleById(number) {
-
-  }
-  deleteAll() {
-    // unlink
-  }
-
+    deleteById(id){
+        let faux=this.archivo.findIndex((o)=>{
+            return o.id==id
+            
+        })
+        if(faux){
+            this.archivo.splice(faux,1);
+        }else{
+            "no existe"
+        }
+        // DELETE '/api/productos/:id
+}
+async deleteAll() {
+        try {
+            await this.fs.promises.unlink(`./${this.archivo}`)
+        } catch (error) {
+            console.log("no se pudo borrar el archivo", error)
+        }
+    }
 }
