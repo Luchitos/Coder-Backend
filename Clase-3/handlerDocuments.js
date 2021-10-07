@@ -8,32 +8,26 @@
 
 const fs = require('fs');
 
-let id=1;
-class Contenedor{
-    constructor(archivo){
+let id = 1;
+class Contenedor {
+    constructor(archivo) {
         this.archivo = archivo;
-        this.codif = 'utf-8'        
+        this.codif = 'utf-8'
     }
 
-    save(title, price, autor){        
-        this.archivo.push({id,title, price, autor});  
-        id++
-        return this.archivo.id;
-        // POST '/api/productos       
-    }  
-        async guardar(objecto) {
-            const data = await this.leer()
-            objecto.id = data.length + 1;
-            data.push(objecto)
-            try {
-                await this.fs.promises.writeFile(this.archivo, JSON.stringify(data, null, "\t"));
-                
-            } catch (error) {
-                console.log('el archivo no se pudo guardar', error)
-            }
-           
+    async save(objecto) {
+        const data = await this.leer()
+        objecto.id = data.length + 1;
+        data.push(objecto)
+        try {
+            await this.fs.promises.writeFile(this.archivo, JSON.stringify(data, null, "\t"));
+
+        } catch (error) {
+            console.log('el archivo no se pudo guardar', error)
+        }
+
     }
-        async leer(){
+    async leer() {
         try {
             let data = await this.fs.promises.readFile(`./${this.archivo}`, this.codif)
             return JSON.parse(data)
@@ -42,13 +36,13 @@ class Contenedor{
             return []
         }
     }
-    getById(id){
+    getById(id) {
         // console.log(id)
-    return this.archivo[id];
-    // GET '/api/productos/:id'
+        return this.archivo[id];
+        // GET '/api/productos/:id'
     }
 
-    async getAll(){
+    async getAll() {
         try {
             let data = await this.fs.promises.readFile(`./${this.file}`, this.codif)
             return JSON.parse(data)
@@ -58,19 +52,19 @@ class Contenedor{
         }
     }
 
-    deleteById(id){
-        let faux=this.archivo.findIndex((o)=>{
-            return o.id==id
-            
+    deleteById(id) {
+        let faux = this.archivo.findIndex((o) => {
+            return o.id == id
+
         })
-        if(faux){
-            this.archivo.splice(faux,1);
-        }else{
+        if (faux) {
+            this.archivo.splice(faux, 1);
+        } else {
             "no existe"
         }
         // DELETE '/api/productos/:id
-}
-async deleteAll() {
+    }
+    async deleteAll() {
         try {
             await this.fs.promises.unlink(`./${this.archivo}`)
         } catch (error) {
